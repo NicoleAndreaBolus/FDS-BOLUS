@@ -79,7 +79,7 @@ function addNum(num1, num2) {
 	console.log("Adding numbers:", num1, "and", num2);
 	let sum = num1 + num2;
 	console.log("Sum:", sum);
- return sum;
+  return sum;
 }
 
 
@@ -87,7 +87,7 @@ function subNum(num1, num2) {
 	console.log("Subtracting numbers:", num1, "and", num2);
 	let difference = num1 - num2;
 	console.log("Difference:", difference);
- return difference;
+  return difference;
 }
 
 
@@ -103,7 +103,7 @@ function multiplyNum(num1, num2) {
 	console.log("Multiplying numbers:", num1, "and", num2);
 	let product = num1 * num2;
 	console.log("Product:", product);
- return product;
+  return product;
 }
 
 
@@ -111,7 +111,7 @@ function divideNum(num1, num2) {
 	console.log("Dividing numbers:", num1, "and", num2);
 	let quotient = num1 / num2;
 	console.log("Quotient:", quotient);
- return quotient;
+  return quotient;
 }
 
 
