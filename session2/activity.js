@@ -81,15 +81,12 @@ function addNum(num1, num2) {
 	console.log("Sum:", sum);
 }
 
-addNum(num1, num2);
 
 function subNum(num1, num2) {
 	console.log("Subtracting numbers:", num1, "and", num2);
 	let difference = num1 - num2;
 	console.log("Difference:", difference);
 }
-
-subNum(num1, num2);
 
 
 let sum = addNum(num1, num2);
