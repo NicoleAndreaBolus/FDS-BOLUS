@@ -126,6 +126,7 @@ function getCircleArea(radius) {
 	console.log("Calculating area of circle with radius:", radius);
 	const pi = 3.14;
 	let area = pi * (radius ** 2);
+	return area;
 }
 
 getCircleArea(5);
