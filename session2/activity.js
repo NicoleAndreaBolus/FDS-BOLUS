@@ -73,23 +73,20 @@
 let num1 = 10;
 let num2 = 5;
 
-
 // 1
 function addNum(num1, num2) {
 	console.log("Adding numbers:", num1, "and", num2);
 	let sum = num1 + num2;
 	console.log("Sum:", sum);
-  return sum;
+	return sum;
 }
-
 
 function subNum(num1, num2) {
 	console.log("Subtracting numbers:", num1, "and", num2);
 	let difference = num1 - num2;
 	console.log("Difference:", difference);
-  return difference;
+	return difference;
 }
-
 
 let sum = addNum(num1, num2);
 let difference = subNum(num1, num2);
@@ -98,30 +95,27 @@ console.log("Sum:", sum);
 console.log("Difference:", difference);
 
 // 2
-
 function multiplyNum(num1, num2) {
 	console.log("Multiplying numbers:", num1, "and", num2);
 	let product = num1 * num2;
 	console.log("Product:", product);
-  return product;
+	return product;
 }
-
 
 function divideNum(num1, num2) {
 	console.log("Dividing numbers:", num1, "and", num2);
 	let quotient = num1 / num2;
 	console.log("Quotient:", quotient);
-  return quotient;
+	return quotient;
 }
 
-
 let product = multiplyNum(num1, num2);
-let quotient = divideNum(num1, num2);	
+let quotient = divideNum(num1, num2);
+
 console.log("Product:", product);
 console.log("Quotient:", quotient);
 
 // 3
-
 function getCircleArea(radius) {
 	console.log("Calculating area of circle with radius:", radius);
 	const pi = 3.14;
@@ -129,17 +123,15 @@ function getCircleArea(radius) {
 	return area;
 }
 
-getCircleArea(5);
 let circleArea = getCircleArea(5);
 console.log("Circle Area:", circleArea);
-
 
 // 4
 function getAverage(num1, num2, num3, num4) {
 	console.log("Calculating average of numbers:", num1, num2, num3, num4);
 	let average = (num1 + num2 + num3 + num4) / 4;
- console.log("Average:",average);
- return average;
+	console.log("Average:", average);
+	return average;
 }
 
 let averageVar = getAverage(10, 20, 30, 40);
