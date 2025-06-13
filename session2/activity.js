@@ -93,6 +93,7 @@ subNum(num1, num2);
 
 let sum = addNum(num1, num2);
 let difference = subNum(num1, num2);
+
 console.log("Sum:", sum);
 console.log("Difference:", difference);
 
