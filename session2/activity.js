@@ -104,7 +104,6 @@ function multiplyNum(num1, num2) {
 
 // 2
 
-multiplyNum(num1, num2);
 
 function divideNum(num1, num2) {
 	console.log("Dividing numbers:", num1, "and", num2);
@@ -112,7 +111,6 @@ function divideNum(num1, num2) {
 	console.log("Quotient:", quotient);
 }
 
-divideNum(num1, num2);
 
 let product = multiplyNum(num1, num2);
 let quotient = divideNum(num1, num2);	
