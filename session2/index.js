@@ -58,3 +58,25 @@ function enterName(){
     let inputName = prompt("Please enter your name:");
     console.log("Hello there, " + inputName + "!");
 }
+
+// Parameterized Functions
+// Parameters are variable-like code. It can gather client/user inputs.
+
+function FullName(name){
+    console.log("Welcome, " + name + "!");
+}
+
+// Function Invocation with Argument
+
+FullName("Joey");
+
+function introduceYourPet(name, breed, age){
+    // console.log("My pet's name is " + name + ", a " + breed + " who is " + age + " years old.");
+    console.log("My pet name is " + name);
+    console.log("He/She is a " + breed);
+    console.log("He/She is " + age + " years old.");
+}
+
+introduceYourPet("Max", "Golden Retriever", 3);
+introduceYourPet("Bella", "Siamese Cat", 2);
+introduceYourPet("Charlie", "Parrot", 1);
