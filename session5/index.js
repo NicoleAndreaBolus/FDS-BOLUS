@@ -109,3 +109,24 @@ for(let index = 0; index < numArray.length; index++) {
     
 } 
 
+
+// Functions and Arrays
+
+let students = [];
+
+function DisplayStudents(){
+    if(studentNumbers.length == 0 || students.length == []){
+        console.log("The array is empty.");
+    }else{
+        for(let index = 0; index < students.length; index++) {
+            console.log(index + 1 + ". " + students[index]);
+        }
+    }
+}
+
+function addStudent(name){
+    students[students.length] = name; // Adding a student to the array
+    console.log(name + " has been added to the list.");
+}
+
+
