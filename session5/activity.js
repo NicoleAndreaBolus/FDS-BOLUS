@@ -25,6 +25,7 @@ for(let index = 0; index < groceryList.length; index++) {
         -invoke and add an argument to be passed in the function.
         -log the groceryList array in the console.
 */
+// Adding an item to the grocery list
 
 function addItem(item){
     groceryList[groceryList.length] = item;
@@ -45,6 +46,8 @@ for(let index = 0; index < groceryList.length; index++) {
         -Create a global variable called outside of the function called itemFound and store the value returned by the function in it.
         -log the itemFound variable in the console.
 */
+
+// Getting item by index
 
 function getItemByIndex(index) {
     if (index < 0 || index >= groceryList.length) {
@@ -70,6 +73,8 @@ getItemByIndex(0);
         -Shorten the length of the array by at least 1 to delete the last item using .length property.
         -return the last item in the array which was stored in the variable.
 */
+
+// Deleting the last item in the grocery list
 
 function deleteItem() {
     if (groceryList.length == 0) {
@@ -99,6 +104,7 @@ for(let index = 0; index < groceryList.length; index++) {
         -Log the groceryList array in the console.
 */
 
+// Adding item by index
 
 function updateItemByIndex(index, newItem) {
 
