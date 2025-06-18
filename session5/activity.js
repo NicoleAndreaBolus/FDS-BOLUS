@@ -4,10 +4,14 @@
 3. Copy the activity code and instructions from your Boodle Notes into your index.js.
 */
 // 4. Create a variable groceryList that has a value of an array of grocery items
-const groceryList = ["Milk", "Eggs", "Bread"];
 
-console.log("Items to buy:")
-console.log(groceryList);
+let groceryList = ["Milk", "Eggs", "Bread", "Fish"];
+
+console.log("=== Grocery List ===");
+console.log("Items to buy:");
+for(let index = 0; index < groceryList.length; index++) {
+    console.log((index + 1) + ". " + groceryList[index]);
+}
 
 /*
     Important note: Don't pass the array as an argument to the function.
@@ -21,13 +25,18 @@ console.log(groceryList);
         -invoke and add an argument to be passed in the function.
         -log the groceryList array in the console.
 */
-       
-function addItem(){
-    
+
+function addItem(item){
+    groceryList[groceryList.length] = item;
+    console.log(item + " has been added to the list.") // Adding an item at the end of the array
 }
 
-addItem();
-console.log(groceryList);
+addItem("Vegetables");
+console.log("=== Updated Grocery List ===");
+console.log("Items to buy:");
+for(let index = 0; index < groceryList.length; index++) {
+    console.log((index + 1) + ". " + groceryList[index]);
+}
 
 /*
     6. Create function which is able to receive an index number as a single argument return the item accessed by its index.
@@ -37,12 +46,22 @@ console.log(groceryList);
         -log the itemFound variable in the console.
 */
 
-function getItemByIndex() {
-    
+function getItemByIndex(index) {
+    if (index < 0 || index >= groceryList.length) {
+        return "Invalid index.";
+    }else if (groceryList.length === 0) {
+        return "The grocery list is empty.";
+    }else{
+        console.log("Item found at index " + index + ": " + groceryList[index]);
+        console.log("Item found: " + groceryList[index]);
+    }
+    return groceryList[index];
 };
 
-let itemFound;
-console.log(itemFound);
+console.log("=== Checking item index ===")
+getItemByIndex(2);
+getItemByIndex(0);
+
 
 /*
     7. Create function which is able to delete the last item in the array after it is bought and return the deleted item.
@@ -53,12 +72,22 @@ console.log(itemFound);
 */
 
 function deleteItem() {
+    if (groceryList.length == 0) {
+        return "The grocery list is empty.";
+    } else {
+        let lastItem = groceryList[groceryList.length - 1]; // Accessing the last item
+        groceryList.length -= 1; // Shortening the array by 1
+        console.log("Deleted item: " + lastItem);
+        return lastItem; // Returning the deleted item
+    }
 
 }
 
-let deletedLastItem;
-console.log(deletedLastItem);
-console.log(groceryList);
+deleteItem();
+console.log("=== Updated Grocery List ===");
+for(let index = 0; index < groceryList.length; index++) {
+    console.log((index + 1) + ". " + groceryList[index]);
+}
    
 
 /*
@@ -70,13 +99,21 @@ console.log(groceryList);
         -Log the groceryList array in the console.
 */
 
-   
-function updateItemByIndex() {
 
+function updateItemByIndex(index, newItem) {
+
+    if (index < 0 || index >= groceryList.length) {
+        console.log("Invalid index."); 
+    } else {
+        groceryList[index] = newItem;
+        console.log("Item added, updated at index " + index + ": " + newItem);
+    } 
 }
 
-updateItemByIndex();
-console.log(groceryList);
+updateItemByIndex(1, "Veggies");
+for(let index = 0; index < groceryList.length; index++) {
+    console.log((index + 1) + ". " + groceryList[index]);
+}
 
 
 /*
@@ -88,12 +125,19 @@ console.log(groceryList);
         - Log the itemsFound variable in the console.
 */
 function displayItems() {
-
+    let itemsFound = [];
+    for (let index = 0; index < groceryList.length; index++) {
+        console.log((index + 1) + ". " + groceryList[index]); // Adding index and item to the new array
+    }
+    return itemsFound;
 }
 
-console.log("Grocery List:");
-itemsFound;
-console.log(itemsFound);
+console.log("=== Current Grocery List ===");
+displayItems();
+
+// let itemsFound = displayItems();
+// console.log("=== Items Found ===");
+
 /*
     10. Create a function which is able to iterate over the array to search for an item.
         -This function will receive the name of the element as an argument
@@ -107,12 +151,12 @@ console.log(itemsFound);
         -Log the value of isItemFound in the console.
 */
 
-function searchItem() {
+// function searchItem() {
 
-}
+// }
 
-const isItemFound
-console.log(isItemFound);
+// const isItemFound
+// console.log(isItemFound);
 
 /*
 11. Create a function which is able to remove a specific item in the array by index
@@ -127,14 +171,14 @@ console.log(isItemFound);
     -Log the isUsersEmpty variable in the console.
 */
 
-function removeElement() {
+// function removeElement() {
 
-}
+// }
 
 // Test the removeElement function
-const removedElement
-console.log(removedElement); 
-console.log(groceryList);
+// const removedElement
+// console.log(removedElement); 
+// console.log(groceryList);
 
 /*
 12. Create function which is able to delete all items in the array.
@@ -142,10 +186,10 @@ console.log(groceryList);
     -The function should not return anything.
 */
 
-function deleteAll() {
+// function deleteAll() {
 
-};
-deleteAll();
+// };
+// deleteAll();
 /*
 13. Create a function which is able to check if the array is empty.
     -Add an if statement to check if the length of the users array is greater than 0.
@@ -156,9 +200,9 @@ deleteAll();
 
 */
 
-function isEmpty() {
+// function isEmpty() {
 
-}
+// }
 
-const isUsersEmpty = ;
-console.log(isUsersEmpty);
+// const isUsersEmpty = isEmpty();
+// console.log(isUsersEmpty);
