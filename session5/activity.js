@@ -133,16 +133,14 @@ for(let index = 0; index < groceryList.length; index++) {
 function displayItems() {
     let itemsFound = [];
     for (let index = 0; index < groceryList.length; index++) {
-        console.log((index + 1) + ". " + groceryList[index]); // Adding index and item to the new array
+        itemsFound.push((index + 1) + ". " + groceryList[index]);
     }
     return itemsFound;
 }
 
-console.log("=== Current Grocery List ===");
-displayItems();
-
-// let itemsFound = displayItems();
-// console.log("=== Items Found ===");
+console.log("=== Display Grocery List ===");
+let itemsFound = displayItems();
+console.log(itemsFound);
 
 /*
     10. Create a function which is able to iterate over the array to search for an item.
@@ -157,12 +155,24 @@ displayItems();
         -Log the value of isItemFound in the console.
 */
 
-// function searchItem() {
+function searchItem(itemName) {
+    let indexFound = -1;
+    for (let index = 0; index < groceryList.length; index++) {
+        if (groceryList[index].toLowerCase() === itemName.toLowerCase()) {
+            indexFound = index;
+            break;
+        }
+    }
 
-// }
+    if (indexFound !== -1) {
+        return "The item exists in the list.";
+    } else {
+        return "The item is not in the list.";
+    }
+}
 
-// const isItemFound
-// console.log(isItemFound);
+let isItemFound = searchItem("Milk");
+console.log(isItemFound);
 
 /*
 11. Create a function which is able to remove a specific item in the array by index
@@ -192,10 +202,23 @@ displayItems();
     -The function should not return anything.
 */
 
-// function deleteAll() {
+function removeElement(index) {
+    if (index < 0 || index >= groceryList.length) {
+        return "Invalid index.";
+    } else {
+        for (let i = index; i < groceryList.length - 1; i++) {
+            groceryList[i] = groceryList[i + 1];
+        }
+        groceryList.length -= 1;
+        return "Element removed successfully.";
+    }
+}
 
-// };
-// deleteAll();
+let removedElement = removeElement(1);
+console.log(removedElement);
+console.log("=== Grocery List After Removal ===");
+console.log(groceryList);
+
 /*
 13. Create a function which is able to check if the array is empty.
     -Add an if statement to check if the length of the users array is greater than 0.
@@ -206,9 +229,13 @@ displayItems();
 
 */
 
-// function isEmpty() {
+function isEmpty() {
+    if (groceryList.length > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
-// }
-
-// const isUsersEmpty = isEmpty();
-// console.log(isUsersEmpty);
+let isUsersEmpty = isEmpty();
+console.log("Is grocery list empty? " + isUsersEmpty
