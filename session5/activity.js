@@ -244,7 +244,7 @@ console.log("=== Grocery List After Removal ===");
 console.log(groceryList);
 
 
-// 12. 
+// 12. Delete all items
 
 function deleteAllItems() {
     groceryList.length = 0;
@@ -255,7 +255,7 @@ deleteAllItems();
 console.log("=== Grocery List After Deletion ===");
 console.log(groceryList);
 
-// 13. 
+// 13. Empty the list
 
 function isEmpty() {
     if (groceryList.length > 0) {
