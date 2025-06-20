@@ -46,6 +46,6 @@ if(num3 % 2 == 0){
     console.log("Odd number");
 }
 
-// Shorthand if-else (ternary operator)
+// Shorthand if-else (ternary operator) if (?) else (:)
 
 (num3 % 2 == 0) ? console.log("Even number") : console.log("Odd number");
