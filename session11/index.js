@@ -53,7 +53,7 @@ const app = http.createServer((request, response) => {
         }
 
     }else if(request.url == "/register" && request.method == "POST") {
-        if(users.length < 5) {
+        if(users.length < 1) {
             response.writeHead(201);
             users.push("Charlie"); // Simulating user registration
             response.end("User registered successfully.");
