@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const cors = require("cors");
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 // middlewares
 app.use(express.json());
@@ -253,7 +253,7 @@ app.post("/users/login", (req, res) => {
             })
         }else if(result.length <= 0){
             res.send({
-                code: 1,
+                code: 3,
                 codeMessage: "user-not-found",
                 details: "The email provided is not registered."
             })
@@ -263,7 +263,7 @@ app.post("/users/login", (req, res) => {
 
             if(!isMatched){
                 res.send({
-                code: 1,
+                code: 2,
                 codeMessage: "error-details",
                 details: "The email or password is incorrect."
                 })
@@ -271,12 +271,15 @@ app.post("/users/login", (req, res) => {
                 res.send({
                 code: 1,
                 codeMessage: "login-success",
-                details: `Welcome to UTask, ${user.fname} ${user.lname}!`
+                details: `Welcome to UTask, ${user.fname} ${user.lname}!`,
+                user_data: result[0]
                 })
             }
         }
     })
 })
+
+
 
 
 
