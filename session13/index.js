@@ -9,7 +9,7 @@ const port = 4000;
 
 // middlewares
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -23,9 +23,9 @@ const db = mysql.createConnection({
 
 // DB Con confirmation message
 db.connect(err => {
-    if(err){
+    if (err) {
         console.log("Error connecting in MySQL Database.");
-    }else{
+    } else {
         console.log("MySQL Database Connection is Successful!");
     }
 })
@@ -186,13 +186,56 @@ app.delete("/tasks/delete/:user_id/:taskId", (req, res) => {
     });
 });
 
+
+// Update Task (by user)
+app.put("/tasks/update/:user_id/:taskId", (req, res) => {
+    const { user_id, taskId } = req.params;
+    const { taskName, taskDescription } = req.body;
+
+    if (!taskName || !taskDescription) {
+        return res.send({
+            code: 0,
+            codeMessage: "missing-fields",
+            details: "Task name and description are required."
+        });
+    }
+
+    const sql = `UPDATE tasks SET taskName = ?, taskDescription = ? WHERE task_id = ? AND user_id = ?`;
+
+    db.query(sql, [taskName, taskDescription, taskId, user_id], (err, result) => {
+        if (err) {
+            return res.send({
+                code: 0,
+                codeMessage: "update-failed",
+                details: "There was an error while updating the task.",
+                error: err
+            });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.send({
+                code: 2,
+                codeMessage: "task-not-found",
+                details: "No task was found to update."
+            });
+        }
+
+        return res.send({
+            code: 1,
+            codeMessage: "task-updated",
+            details: "The task has been successfully updated."
+        });
+    });
+});
+
+
 // USER ROUTES
 
 // User sign up
 app.post("/users/register", async (req, res) => {
-    const {fname, mname, lname, email, pass} = req.body;
+    const { fname, mname, lname, email, pass } = req.body;
 
-    if(!fname || !mname || !lname || !email || !pass){
+    if (!fname || !mname || !lname || !email || !pass) {
         res.send({
             code: 0,
             codeMessage: "some-fields-empty",
@@ -203,33 +246,33 @@ app.post("/users/register", async (req, res) => {
     const check = "SELECT * FROM users WHERE email = ?";
 
     db.query(check, [email], async (err, result) => {
-        if(err){
+        if (err) {
             res.send({
-            code: 0,
-            codeMessage: "server-error",
-            details: "Cannot accept your registration at the moment."
-        })
+                code: 0,
+                codeMessage: "server-error",
+                details: "Cannot accept your registration at the moment."
+            })
         }
 
-        if(result.length > 0){
+        if (result.length > 0) {
             res.send({
                 code: 2,
                 codeMessage: "user-already-existing",
                 details: "The email you provided was already registered."
             })
-        }else{
+        } else {
             const hashedPassword = await bcrypt.hash(pass, 10);
 
             const sql = "INSERT INTO users(fname, mname, lname, email, pass) VALUES (?, ?, ?, ? ,?)";
 
             db.query(sql, [fname, mname, lname, email, hashedPassword], (err, result) => {
-                if(err){
+                if (err) {
                     res.send({
-                    code: 0,
-                    codeMessage: "server-error",
-                    details: "Cannot accept your registration at the moment."
+                        code: 0,
+                        codeMessage: "server-error",
+                        details: "Cannot accept your registration at the moment."
                     })
-                }else{
+                } else {
                     res.json({
                         code: 1,
                         codeMessage: "registration-success",
@@ -237,7 +280,7 @@ app.post("/users/register", async (req, res) => {
                     })
                 }
             })
-        }  
+        }
 
     })
 })
@@ -245,49 +288,170 @@ app.post("/users/register", async (req, res) => {
 // User Auth/Login
 
 app.post("/users/login", (req, res) => {
-    const {email, pass} = req.body;
+    const { email, pass } = req.body;
     const sql = "SELECT * FROM users WHERE email = ?";
 
     db.query(sql, email, async (err, result) => {
-        if(err){
+        if (err) {
             res.send({
                 code: 0,
                 codeMessage: "server-error",
                 details: "There is a problem with your request. Please try again."
             })
-        }else if(result.length <= 0){
+        } else if (result.length <= 0) {
             res.send({
                 code: 2,
                 codeMessage: "user-not-found",
                 details: "The email provided is not registered."
             })
-        }else{
+        } else {
             const user = result[0];
             const isMatched = await bcrypt.compare(pass, user.pass);
 
-            if(!isMatched){
+            if (!isMatched) {
                 res.send({
-                code: 3,
-                codeMessage: "error-details",
-                details: "The email or password is incorrect."
+                    code: 3,
+                    codeMessage: "error-details",
+                    details: "The email or password is incorrect."
                 })
-            }else{
+            } else {
                 res.send({
-                code: 1,
-                codeMessage: "login-success",
-                details: `Welcome to UTask, ${user.fname} ${user.lname}!`,
-                user_data: {
-                    user_id: result[0].user_id,
-                    fname: result[0].fname,
-                    mname: result[0].mname,
-                    lname: result[0].lname,
-                    email: result[0].email
-                }
+                    code: 1,
+                    codeMessage: "login-success",
+                    details: `Welcome to UTask, ${user.fname} ${user.lname}!`,
+                    user_data: {
+                        user_id: result[0].user_id,
+                        fname: result[0].fname,
+                        mname: result[0].mname,
+                        lname: result[0].lname,
+                        email: result[0].email
+                    }
                 })
             }
         }
     })
 })
+
+
+
+// Update user profile (name fields only)
+// Update user profile (fname, mname, lname, and email)
+app.put("/users/update/:id", (req, res) => {
+    const { id } = req.params;
+    const { fname, mname, lname, email } = req.body;
+
+    if (!fname || !mname || !lname || !email) {
+        return res.send({
+            code: 0,
+            codeMessage: "missing-fields",
+            details: "All fields are required."
+        });
+    }
+
+    // Check if the new email is already used by someone else
+    const checkEmailSql = "SELECT * FROM users WHERE email = ? AND user_id != ?";
+    db.query(checkEmailSql, [email, id], (err, result) => {
+        if (err) {
+            return res.send({
+                code: 0,
+                codeMessage: "email-check-failed",
+                details: "Failed to validate email.",
+                error: err
+            });
+        }
+
+        if (result.length > 0) {
+            return res.send({
+                code: 2,
+                codeMessage: "email-already-used",
+                details: "The new email is already used by another user."
+            });
+        }
+
+        // Proceed to update user
+        const updateSql = "UPDATE users SET fname = ?, mname = ?, lname = ?, email = ? WHERE user_id = ?";
+        db.query(updateSql, [fname, mname, lname, email, id], (err, result) => {
+            if (err) {
+                return res.send({
+                    code: 0,
+                    codeMessage: "update-failed",
+                    details: "Something went wrong while updating your profile.",
+                    error: err
+                });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.send({
+                    code: 3,
+                    codeMessage: "user-not-found",
+                    details: "No user found to update."
+                });
+            }
+
+            return res.send({
+                code: 1,
+                codeMessage: "profile-updated",
+                details: "Your profile has been updated successfully."
+            });
+        });
+    });
+});
+
+// Change User Password
+app.put("/users/change-password/:id", async (req, res) => {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+        return res.send({
+            code: 0,
+            codeMessage: "missing-fields",
+            details: "Current and new passwords are required."
+        });
+    }
+
+    const sqlSelect = "SELECT * FROM users WHERE user_id = ?";
+    db.query(sqlSelect, [id], async (err, results) => {
+        if (err || results.length === 0) {
+            return res.send({
+                code: 0,
+                codeMessage: "user-not-found",
+                details: "User not found."
+            });
+        }
+
+        const user = results[0];
+        const isMatch = await bcrypt.compare(currentPassword, user.pass);
+        if (!isMatch) {
+            return res.send({
+                code: 2,
+                codeMessage: "incorrect-password",
+                details: "Current password is incorrect."
+            });
+        }
+
+        const hashedNewPass = await bcrypt.hash(newPassword, 10);
+        const sqlUpdate = "UPDATE users SET pass = ? WHERE user_id = ?";
+        db.query(sqlUpdate, [hashedNewPass, id], (err, result) => {
+            if (err) {
+                return res.send({
+                    code: 0,
+                    codeMessage: "update-failed",
+                    details: "Failed to update password."
+                });
+            }
+
+            return res.send({
+                code: 1,
+                codeMessage: "password-updated",
+                details: "Password successfully updated."
+            });
+        });
+    });
+});
+
+
+
 
 function toMySQLDateTime(jsDate) {
     const pad = n => n < 10 ? '0' + n : n;
