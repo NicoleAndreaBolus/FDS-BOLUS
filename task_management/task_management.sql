@@ -42,3 +42,11 @@ MODIFY COLUMN taskCompleted DATE;
 INSERT INTO users(fname, mname, lname, email, pass)
 VALUES
 ("Nicole Andrea", "Gamboa", "Bolus", "nagbolus.student@ua.edu.ph", "nagb123");
+
+SELECT * FROM users;
+
+
+ALTER TABLE tasks
+MODIFY COLUMN taskCreated DATETIME NOT NULL, 
+MODIFY COLUMN taskCompleted DATETIME;
+
