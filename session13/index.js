@@ -243,6 +243,15 @@ app.post("/users/register", async (req, res) => {
         })
     }
 
+    if(pass.length < 8) {
+        res.send({
+            code: 0,
+            codeMessage: "weak-password",
+            details: "Password must be at least 8 characters long."
+        });
+        return;
+    }
+
     const check = "SELECT * FROM users WHERE email = ?";
 
     db.query(check, [email], async (err, result) => {
