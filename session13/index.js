@@ -242,14 +242,12 @@ app.post("/users/register", async (req, res) => {
             details: "Please fill all required fields."
         })
     }
-
-    if(pass.length < 8) {
+    if (pass.length < 8) {
         res.send({
             code: 0,
-            codeMessage: "weak-password",
+            codeMessage: "password-too-short",
             details: "Password must be at least 8 characters long."
-        });
-        return;
+        })
     }
 
     const check = "SELECT * FROM users WHERE email = ?";
@@ -274,7 +272,7 @@ app.post("/users/register", async (req, res) => {
 
             const sql = "INSERT INTO users(fname, mname, lname, email, pass) VALUES (?, ?, ?, ? ,?)";
 
-            db.query(sql, [fname, mname, lname, email, hashedPassword], (err, result) => {
+            db.query(sql, [fname, mname, lname, email.toLowerCase(), hashedPassword], (err, result) => {
                 if (err) {
                     res.send({
                         code: 0,
